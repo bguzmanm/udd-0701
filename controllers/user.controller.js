@@ -12,12 +12,16 @@ const findAll = async (req, res) => {
   }
 }
 
-const singup = async (req, res) => {
+const signup = async (req, res) => {
   try {
 
     const u = new user(req.body);
     u.hashPassword(req.body.password);
-    return res.json(await user.create(u));
+    const result = await user.create(u);
+    return res.json({
+      "msg": "usuario creado",
+      "details": result
+    });
   } catch (error) {
     return res.status(500).json({
       "msg": "error 500, entre el teclado y el asiento, del/a desarrollador/a",
@@ -30,4 +34,4 @@ const findOne = async (req, res) => {
   return res.json(Promise.resolve({ uno: "uno" }));
 }
 
-module.exports = { findAll, findOne, singup };
+module.exports = { findAll, findOne, signup };
